@@ -4,6 +4,16 @@ session_start();
 if (!$_SESSION['Login']) {
   header('Location: ../login.php');
 }
+
+if (!$_GET['id']) {
+  header('Location: message.php');
+} else {
+  $id_message = $_GET['id'];
+
+  require_once 'config/conn.php';
+  $message = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM message WHERE id_message=$id_message"));
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +23,7 @@ if (!$_SESSION['Login']) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Gallery Foto - Velocity</title>
+  <title>Reading - Velocity</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -144,7 +154,7 @@ if (!$_SESSION['Login']) {
 
       <!-- Gallery Foto -->
       <li class="nav-item">
-        <a class="nav-link " href="gallery-foto.php">
+        <a class="nav-link collapsed" href="gallery-foto.php">
           <i class="bi bi-image"></i>
           <span>Gallery Foto</span>
         </a>
@@ -160,7 +170,7 @@ if (!$_SESSION['Login']) {
 
       <!-- Message -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="message.php">
+        <a class="nav-link " href="message.php">
           <i class="bi bi-chat-dots"></i>
           <span>Message</span>
         </a>
@@ -172,11 +182,12 @@ if (!$_SESSION['Login']) {
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Gallery Foto</h1>
+      <h1>Reading</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Gallery Foto</li>
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="message.php">Message</a></li>
+          <li class="breadcrumb-item active">Reading</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -193,103 +204,50 @@ if (!$_SESSION['Login']) {
               <div class="card recent-sales overflow-auto">
 
                 <div class="card-body">
-                  <div class="mt-3">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      Add Foto
-                    </button>
 
-                    <form action="config/add-gallery.php" method="post" enctype="multipart/form-data">
-                      <!-- Modal -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Foto</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="mb-3">
-                                <label for="gallery_name" class="form-label">Gallery Name</label>
-                                <input type="text" class="form-control" id="gallery_name" name="gallery_name" required>
-                              </div>
-                              <div class="mb-3">
-                                <label for="gallery_img" class="form-label">Foto</label>
-                                <input type="file" class="form-control" id="gallery_img" name="gallery_img" accept="image/png, image/jpeg, image/jpg">
-                              </div>
-                            </div>
-                            <div class=" modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
                   <center>
-                    <h5 class="card-title">Gallery <span>| Table</span></h5>
+                    <h5 class="card-title">Detail <span>| Message</span></h5>
                   </center>
-                  <table class="table table-borderless datatable">
-                    <thead>
-                      <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Gallery Name</th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      require_once 'config/conn.php';
-                      $no = 1;
 
-                      $gallerys = mysqli_query($conn, "SELECT * FROM gallery");
-
-                      foreach ($gallerys as $gallery) {
-                      ?>
-                        <tr>
-                          <th scope="row"><?= $no++ ?></th>
-                          <td><?= $gallery['gallery_name'] ?></td>
-                          <td>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalEdit<?= $gallery['gallery_id'] ?>">
-                              <i class="bi bi-pencil-square"></i>
-                            </button>
-                            <a href="config/del-gallery.php?id=<?= $gallery['gallery_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Menghapus Data ?')">
-                              <i class="bi bi-trash"></i>
-                            </a>
-                            <!-- Modal Edit -->
-                            <form action="config/edit-gallery.php" method="POST" enctype="multipart/form-data">
-                              <div class="modal fade" id="exampleModalEdit<?= $gallery['gallery_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Gallery</h1>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <input type="hidden" class="form-control" id="gallery_id" name="gallery_id" value="<?= $gallery['gallery_id'] ?>" readonly>
-                                      <div class="mb-3">
-                                        <label for="gallery_name" class="form-label">Gallery Name</label>
-                                        <input type="text" class="form-control" id="gallery_name" name="gallery_name" value="<?= $gallery['gallery_name'] ?>">
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="gallery_img" class="form-label">Gallery Foto</label>
-                                        <input type="file" class="form-control" id="gallery_img" name="gallery_img" accept="image/png, image/jpeg, image/jpg">
-                                      </div>
-                                    </div>
-                                    <div class=" modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn btn-primary">Edit</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
-                          </td>
-                        </tr>
-                      <?php } ?>
-                    </tbody>
-                  </table>
+                  <div class="row">
+                    <h3>From:</h3>
+                    <div class="col-2">
+                      <h5 class="card-title">Name</h5>
+                    </div>
+                    <div class="col-1">
+                      <h5 class="card-title">:</h5>
+                    </div>
+                    <div class="col-9">
+                      <h5 class="card-title"><?= $message['name'] ?></h5>
+                    </div>
+                    <div class="col-2" style="margin-top: -25px;">
+                      <h5 class="card-title">Email</h5>
+                    </div>
+                    <div class="col-1" style="margin-top: -25px;">
+                      <h5 class="card-title">:</h5>
+                    </div>
+                    <div class="col-9" style="margin-top: -25px;">
+                      <h5 class="card-title"><?= $message['email'] ?></h5>
+                    </div>
+                    <div class="col-2" style="margin-top: -25px;">
+                      <h5 class="card-title">Subject</h5>
+                    </div>
+                    <div class="col-1" style="margin-top: -25px;">
+                      <h5 class="card-title">:</h5>
+                    </div>
+                    <div class="col-9" style="margin-top: -25px;">
+                      <h5 class="card-title"><?= $message['subject'] ?></h5>
+                    </div>
+                    <div class="col-2" style="margin-top: -25px;">
+                      <h5 class="card-title">Message</h5>
+                    </div>
+                    <div class="col-1" style="margin-top: -25px;">
+                      <h5 class="card-title">:</h5>
+                    </div>
+                    <div class="col-12" style="margin-top: -25px;">
+                      <h5 class="card-title"><?= $message['message'] ?></h5>
+                    </div>
+                  </div>
 
                 </div>
 

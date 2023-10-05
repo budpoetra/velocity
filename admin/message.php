@@ -13,7 +13,7 @@ if (!$_SESSION['Login']) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Blog - Velocity</title>
+  <title>Message - Velocity</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -152,7 +152,7 @@ if (!$_SESSION['Login']) {
 
       <!-- Blog -->
       <li class="nav-item">
-        <a class="nav-link " href="blog.php">
+        <a class="nav-link collapsed" href="blog.php">
           <i class="bi bi-file-earmark-post"></i>
           <span>Blog</span>
         </a>
@@ -160,7 +160,7 @@ if (!$_SESSION['Login']) {
 
       <!-- Message -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="message.php">
+        <a class="nav-link " href="message.php">
           <i class="bi bi-chat-dots"></i>
           <span>Message</span>
         </a>
@@ -172,11 +172,11 @@ if (!$_SESSION['Login']) {
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Blog</h1>
+      <h1>Message</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Blog</li>
+          <li class="breadcrumb-item active">Message</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -193,53 +193,18 @@ if (!$_SESSION['Login']) {
               <div class="card recent-sales overflow-auto">
 
                 <div class="card-body">
-                  <div class="mt-3">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      Add Blog
-                    </button>
 
-                    <form action="config/add-blog.php" method="post" enctype="multipart/form-data">
-                      <!-- Modal -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Blog</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="mb-3">
-                                <label for="blog_img" class="form-label">Foto</label>
-                                <input type="file" class="form-control" id="blog_img" name="blog_img" accept="image/png, image/jpeg, image/jpg">
-                              </div>
-                              <div class="mb-3">
-                                <label for="blog_title" class="form-label">Blog Title</label>
-                                <input type="text" class="form-control" id="blog_title" name="blog_title" required>
-                              </div>
-                              <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="blog_body" style="height: 300px"></textarea>
-                                <label for="floatingTextarea2">Blog Body</label>
-                              </div>
-                            </div>
-                            <div class=" modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
                   <center>
-                    <h5 class="card-title">Blog <span>| Table</span></h5>
+                    <h5 class="card-title">Message <span>| Table</span></h5>
                   </center>
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
                         <th scope="col">No</th>
-                        <th scope="col">Blog Title</th>
-                        <th scope="col">Blog Post</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Recive Message</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
@@ -248,53 +213,23 @@ if (!$_SESSION['Login']) {
                       require_once 'config/conn.php';
                       $no = 1;
 
-                      $blogs = mysqli_query($conn, "SELECT * FROM blog");
+                      $messages = mysqli_query($conn, "SELECT * FROM message");
 
-                      foreach ($blogs as $blog) {
+                      foreach ($messages as $message) {
                       ?>
                         <tr>
                           <th scope="row"><?= $no++ ?></th>
-                          <td><?= $blog['blog_title'] ?></td>
-                          <td><?= $blog['blog_post'] ?></td>
+                          <td><?= $message['name'] ?></td>
+                          <td><?= $message['email'] ?></td>
+                          <td><?= $message['subject'] ?></td>
+                          <td><?= $message['time'] ?></td>
                           <td>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalEdit<?= $blog['blog_id'] ?>">
-                              <i class="bi bi-pencil-square"></i>
-                            </button>
-                            <a href="config/del-gallery.php?id=<?= $blog['blog_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Menghapus Data ?')">
+                            <a href="detail-message.php?id=<?= $message['id_message'] ?>" class="btn btn-primary btn-sm">
+                              Read
+                            </a>
+                            <a href="config/del-message.php?id=<?= $message['id_message'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Menghapus Data ?')">
                               <i class="bi bi-trash"></i>
                             </a>
-                            <!-- Modal -->
-                            <form action="config/edit-blog.php" method="post" enctype="multipart/form-data">
-                              <input type="hidden" class="form-control" id="blog_id" name="blog_id" value="<?= $blog['blog_id'] ?>">
-                              <div class="modal fade" id="exampleModalEdit<?= $blog['blog_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-xl">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Blog</h1>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <div class="mb-3">
-                                        <label for="blog_img" class="form-label">Foto</label>
-                                        <input type="file" class="form-control" id="blog_img" name="blog_img" accept="image/png, image/jpeg, image/jpg">
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="blog_title" class="form-label">Blog Title</label>
-                                        <input type="text" class="form-control" id="blog_title" name="blog_title" value="<?= $blog['blog_title'] ?>">
-                                      </div>
-                                      <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="blog_body" style="height: 300px"><?= $blog['blog_body'] ?></textarea>
-                                        <label for="floatingTextarea2">Blog Body</label>
-                                      </div>
-                                    </div>
-                                    <div class=" modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
                           </td>
                         </tr>
                       <?php } ?>

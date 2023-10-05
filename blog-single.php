@@ -1,3 +1,13 @@
+<?php
+if (!$_GET['blog-id']) {
+  header('Location: blog.php');
+} else {
+  $blog_id = $_GET['blog-id'];
+}
+require_once 'admin/config/conn.php';
+$blog = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM blog WHERE blog_id=$blog_id"));
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +15,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Blog - Presento Bootstrap Template</title>
+  <title>Blog Single - Velocity</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -42,41 +52,27 @@
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center">
-      <h1 class="logo me-auto"><a href="index.html">Presento<span>.</span></a></h1>
+      <h1 class="logo me-auto">
+        <a href="index.html">Velocity<span>.</span></a>
+      </h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt=""></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-          <li><a class="nav-link scrollto" href="#team">Team</a></li>
-          <li><a class="active" href="blog.html">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
+          <li><a class="nav-link scrollto" href="index.php">Home</a></li>
+          <li><a class="nav-link scrollto" href="index.php#about">About</a></li>
+          <li><a class="nav-link scrollto" href="index.php#product">Product</a></li>
+          <li>
+            <a class="nav-link scrollto" href="index.php#gallery-foto">Gallery Foto</a>
           </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="index.php#team">Client</a></li>
+          <li><a class="nav-link scrollto active" href="#">Blog</a></li>
+          <li><a class="nav-link scrollto" href="index.php#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="login.php">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-
-      <a href="#about" class="get-started-btn scrollto">Get Started</a>
+      </nav>
     </div>
   </header><!-- End Header -->
 
@@ -88,14 +84,15 @@
 
         <ol>
           <li><a href="index.html">Home</a></li>
-          <li>Blog</li>
+          <li><a href="blog.html">Blog</a></li>
+          <li>Blog Single</li>
         </ol>
-        <h2>Blog</h2>
+        <h2>Blog Single</h2>
 
       </div>
     </section><!-- End Breadcrumbs -->
 
-    <!-- ======= Blog Section ======= -->
+    <!-- ======= Blog Single Section ======= -->
     <section id="blog" class="blog">
       <div class="container" data-aos="fade-up">
 
@@ -103,133 +100,44 @@
 
           <div class="col-lg-8 entries">
 
-            <article class="entry">
+            <article class="entry entry-single">
 
               <div class="entry-img">
-                <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+                <img src="admin/assets/img/upload/<?= $blog['blog_img'] ?>" alt="" class="img-fluid">
               </div>
 
               <h2 class="entry-title">
-                <a href="blog-single.html">Dolorum optio tempore voluptas dignissimos cumque fuga qui quibusdam quia</a>
+                <a href="blog-single.html"><?= $blog['blog_title'] ?></a>
               </h2>
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">Velocity Club Motor</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="<?= $blog['blog_post'] ?>">
+                        <?php
+                        $date = strtotime($blog['blog_post']);
+                        echo date('d M y', $date);
+                        ?>
+                      </time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html"><?= rand(1, 99) ?> Comments</a></li>
                 </ul>
               </div>
 
               <div class="entry-content">
-                <p>
-                  Similique neque nam consequuntur ad non maxime aliquam quas. Quibusdam animi praesentium. Aliquam et laboriosam eius aut nostrum quidem aliquid dicta.
-                  Et eveniet enim. Qui velit est ea dolorem doloremque deleniti aperiam unde soluta. Est cum et quod quos aut ut et sit sunt. Voluptate porro consequatur assumenda perferendis dolore.
+                <p style="text-align: justify;">
+                  <?= $blog['blog_body'] ?>
                 </p>
-                <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
-                </div>
+                <!-- <blockquote>
+                  <p>
+                    Et vero doloremque tempore voluptatem ratione vel aut. Deleniti sunt animi aut. Aut eos aliquam doloribus minus autem quos.
+                  </p>
+                </blockquote> -->
+
               </div>
 
             </article><!-- End blog entry -->
 
-            <article class="entry">
-
-              <div class="entry-img">
-                <img src="assets/img/blog/blog-2.jpg" alt="" class="img-fluid">
-              </div>
-
-              <h2 class="entry-title">
-                <a href="blog-single.html">Nisi magni odit consequatur autem nulla dolorem</a>
-              </h2>
-
-              <div class="entry-meta">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
-                </ul>
-              </div>
-
-              <div class="entry-content">
-                <p>
-                  Incidunt voluptate sit temporibus aperiam. Quia vitae aut sint ullam quis illum voluptatum et. Quo libero rerum voluptatem pariatur nam.
-                  Ad impedit qui officiis est in non aliquid veniam laborum. Id ipsum qui aut. Sit aliquam et quia molestias laboriosam. Tempora nam odit omnis eum corrupti qui aliquid excepturi molestiae. Facilis et sint quos sed voluptas. Maxime sed tempore enim omnis non alias odio quos distinctio.
-                </p>
-                <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
-                </div>
-              </div>
-
-            </article><!-- End blog entry -->
-
-            <article class="entry">
-
-              <div class="entry-img">
-                <img src="assets/img/blog/blog-3.jpg" alt="" class="img-fluid">
-              </div>
-
-              <h2 class="entry-title">
-                <a href="blog-single.html">Possimus soluta ut id suscipit ea ut. In quo quia et soluta libero sit sint.</a>
-              </h2>
-
-              <div class="entry-meta">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
-                </ul>
-              </div>
-
-              <div class="entry-content">
-                <p>
-                  Aut iste neque ut illum qui perspiciatis similique recusandae non. Fugit autem dolorem labore omnis et. Eum temporibus fugiat voluptate enim tenetur sunt omnis.
-                  Doloremque est saepe laborum aut. Ipsa cupiditate ex harum at recusandae nesciunt. Ut dolores velit.
-                </p>
-                <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
-                </div>
-              </div>
-
-            </article><!-- End blog entry -->
-
-            <article class="entry">
-
-              <div class="entry-img">
-                <img src="assets/img/blog/blog-4.jpg" alt="" class="img-fluid">
-              </div>
-
-              <h2 class="entry-title">
-                <a href="blog-single.html">Non rem rerum nam cum quo minus. Dolor distinctio deleniti explicabo eius exercitationem.</a>
-              </h2>
-
-              <div class="entry-meta">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
-                </ul>
-              </div>
-
-              <div class="entry-content">
-                <p>
-                  Aspernatur rerum perferendis et sint. Voluptates cupiditate voluptas atque quae. Rem veritatis rerum enim et autem. Saepe atque cum eligendi eaque iste omnis a qui.
-                  Quia sed sunt. Ea asperiores expedita et et delectus voluptates rerum. Id saepe ut itaque quod qui voluptas nobis porro rerum. Quam quia nesciunt qui aut est non omnis. Inventore occaecati et quaerat magni itaque nam voluptas. Voluptatem ducimus sint id earum ut nesciunt sed corrupti nemo.
-                </p>
-                <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
-                </div>
-              </div>
-
-            </article><!-- End blog entry -->
-
-            <div class="blog-pagination">
-              <ul class="justify-content-center">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-              </ul>
-            </div>
+            <!-- End blog comments -->
 
           </div><!-- End blog entries list -->
 
@@ -315,7 +223,7 @@
         </div>
 
       </div>
-    </section><!-- End Blog Section -->
+    </section><!-- End Blog Single Section -->
 
   </main><!-- End #main -->
 
@@ -327,7 +235,7 @@
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Presento<span>.</span></h3>
+            <h3>Velocity<span>.</span></h3>
             <p>
               A108 Adam Street <br>
               New York, NY 535022<br>
@@ -370,29 +278,7 @@
         </div>
       </div>
     </div>
-
-    <div class="container d-md-flex py-4">
-
-      <div class="me-md-auto text-center text-md-start">
-        <div class="copyright">
-          &copy; Copyright <strong><span>Presento</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/presento-bootstrap-corporate-template/ -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
-      </div>
-      <div class="social-links text-center text-md-end pt-3 pt-md-0">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-      </div>
-    </div>
+    x
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

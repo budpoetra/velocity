@@ -59,13 +59,6 @@ if (!$_SESSION['Login']) {
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
-
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
@@ -93,7 +86,7 @@ if (!$_SESSION['Login']) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
@@ -103,7 +96,7 @@ if (!$_SESSION['Login']) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -164,6 +157,14 @@ if (!$_SESSION['Login']) {
           <span>Blog</span>
         </a>
       </li>
+
+      <!-- Message -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="message.php">
+          <i class="bi bi-chat-dots"></i>
+          <span>Message</span>
+        </a>
+      </li>
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -198,8 +199,8 @@ if (!$_SESSION['Login']) {
                       Add Product
                     </button>
 
-                    <form action="config/add-product.php" method="post">
-                      <!-- Modal -->
+                    <!-- Modal -->
+                    <form action="config/add-product.php" method="POST" enctype="multipart/form-data">
                       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
@@ -224,10 +225,10 @@ if (!$_SESSION['Login']) {
                                 <label for="type" class="form-label">Product Type</label>
                                 <div class="input-group mb-3">
                                   <select class="form-select" id="type" name="type">
-                                    <option selected>Choose...</option>
-                                    <option value="Jacket">Jacket</option>
-                                    <option value="Helmet">Helmet</option>
-                                    <option value="Shoes">Shoes</option>
+                                    <option selected disabled>Choose...</option>
+                                    <option value="filter-app">Jacket</option>
+                                    <option value="filter-card">Helmet</option>
+                                    <option value="filter-web">Shoes</option>
                                   </select>
                                 </div>
                               </div>
@@ -254,7 +255,6 @@ if (!$_SESSION['Login']) {
                         <th scope="col">No</th>
                         <th scope="col">Product Name</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col">Type</th>
                         <th scope="col">Price</th>
                         <th scope="col">Actions</th>
                       </tr>
@@ -272,7 +272,6 @@ if (!$_SESSION['Login']) {
                           <th scope="row"><?= $no++ ?></th>
                           <td><?= $product['product_name'] ?></td>
                           <td><?= $product['product_quantity'] ?></td>
-                          <td><?= $product['product_type'] ?></td>
                           <td>Rp. <?= $product['product_price'] ?></td>
                           <td>
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalEdit<?= $product['product_id'] ?>">
@@ -282,7 +281,7 @@ if (!$_SESSION['Login']) {
                               <i class="bi bi-trash"></i>
                             </a>
                             <!-- Modal Edit -->
-                            <form action="config/edit-product.php" method="POST">
+                            <form action="config/edit-product.php" method="POST" enctype="multipart/form-data">
                               <div class="modal fade" id="exampleModalEdit<?= $product['product_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
@@ -308,16 +307,16 @@ if (!$_SESSION['Login']) {
                                         <label for="type" class="form-label">Product Type</label>
                                         <div class="input-group mb-3">
                                           <select class="form-select" id="type" name="type">
-                                            <option value="<?= $product['product_type'] ?>"><?= $product['product_type'] ?></option>
-                                            <option value="Jacket">Jacket</option>
-                                            <option value="Helmet">Helmet</option>
-                                            <option value="Shoes">Shoes</option>
+                                            <option value="<?= $product['product_type'] ?>">Chooses...</option>
+                                            <option value="filter-app">Jacket</option>
+                                            <option value="filter-card">Helmet</option>
+                                            <option value="filter-web">Shoes</option>
                                           </select>
                                         </div>
                                       </div>
                                       <div class="mb-3">
                                         <label for="product_img" class="form-label">Product Foto</label>
-                                        <input type="file" class="form-control" id="product_img" name="product_img" accept="image/png, image/jpeg, image/jpg" value="<?= $product['product_img'] ?>">
+                                        <input type="file" class="form-control" id="product_img" name="product_img" accept="image/png, image/jpeg, image/jpg">
                                       </div>
                                     </div>
                                     <div class=" modal-footer">
