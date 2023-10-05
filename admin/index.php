@@ -1,9 +1,9 @@
-<?php 
-  session_start();
+<?php
+session_start();
 
-  if (!$_SESSION['Login']) {
-    header('Location: ../login.php');
-  }
+if (!$_SESSION['Login']) {
+  header('Location: ../login.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +134,6 @@
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-
       <li class="nav-item">
         <a class="nav-link " href="index.php">
           <i class="bi bi-grid"></i>
@@ -145,7 +144,7 @@
       <!-- Product -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="product.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-truck"></i>
           <span>Product</span>
         </a>
       </li>
@@ -153,19 +152,18 @@
       <!-- Gallery Foto -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="gallery-foto.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-image"></i>
           <span>Gallery Foto</span>
         </a>
       </li>
 
       <!-- Blog -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="Blog.php">
-          <i class="bi bi-grid"></i>
+        <a class="nav-link collapsed" href="blog.php">
+          <i class="bi bi-file-earmark-post"></i>
           <span>Blog</span>
         </a>
       </li>
-
     </ul>
 
   </aside><!-- End Sidebar-->

@@ -13,7 +13,7 @@ if (!$_SESSION['Login']) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Product - Velocity</title>
+  <title>Blog - Velocity</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -143,7 +143,7 @@ if (!$_SESSION['Login']) {
 
       <!-- Product -->
       <li class="nav-item">
-        <a class="nav-link " href="product.php">
+        <a class="nav-link collapsed" href="product.php">
           <i class="bi bi-truck"></i>
           <span>Product</span>
         </a>
@@ -159,7 +159,7 @@ if (!$_SESSION['Login']) {
 
       <!-- Blog -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="blog.php">
+        <a class="nav-link " href="blog.php">
           <i class="bi bi-file-earmark-post"></i>
           <span>Blog</span>
         </a>
@@ -171,11 +171,11 @@ if (!$_SESSION['Login']) {
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Product</h1>
+      <h1>Blog</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Product</li>
+          <li class="breadcrumb-item active">Blog</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -195,45 +195,30 @@ if (!$_SESSION['Login']) {
                   <div class="mt-3">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      Add Product
+                      Add Blog
                     </button>
 
-                    <form action="config/add-product.php" method="post">
+                    <form action="config/add-blog.php" method="post">
                       <!-- Modal -->
                       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-xl">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Blog</h1>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                               <div class="mb-3">
-                                <label for="product_name" class="form-label">Product Name</label>
-                                <input type="text" class="form-control" id="product_name" name="product_name" required>
+                                <label for="blog_img" class="form-label">Foto</label>
+                                <input type="file" class="form-control" id="blog_img" name="blog_img" accept="image/png, image/jpeg, image/jpg">
                               </div>
                               <div class="mb-3">
-                                <label for="quantity" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" required>
+                                <label for="blog_title" class="form-label">Blog Title</label>
+                                <input type="text" class="form-control" id="blog_title" name="blog_title" required>
                               </div>
-                              <div class="mb-3">
-                                <label for="price" class="form-label">Price</label>
-                                <input type="number" class="form-control" id="price" name="price" required>
-                              </div>
-                              <div class="mb-3">
-                                <label for="type" class="form-label">Product Type</label>
-                                <div class="input-group mb-3">
-                                  <select class="form-select" id="type" name="type">
-                                    <option selected>Choose...</option>
-                                    <option value="Jacket">Jacket</option>
-                                    <option value="Helmet">Helmet</option>
-                                    <option value="Shoes">Shoes</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="mb-3">
-                                <label for="product_img" class="form-label">Product Foto</label>
-                                <input type="file" class="form-control" id="product_img" name="product_img" accept="image/png, image/jpeg, image/jpg">
+                              <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="blog_body" style="height: 300px"></textarea>
+                                <label for="floatingTextarea2">Blog Body</label>
                               </div>
                             </div>
                             <div class=" modal-footer">
@@ -246,16 +231,14 @@ if (!$_SESSION['Login']) {
                     </form>
                   </div>
                   <center>
-                    <h5 class="card-title">Product <span>| Table</span></h5>
+                    <h5 class="card-title">Gallery <span>| Table</span></h5>
                   </center>
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
                         <th scope="col">No</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Blog Title</th>
+                        <th scope="col">Blog Post</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
@@ -264,65 +247,48 @@ if (!$_SESSION['Login']) {
                       require_once 'config/conn.php';
                       $no = 1;
 
-                      $products = mysqli_query($conn, "SELECT * FROM product");
+                      $blogs = mysqli_query($conn, "SELECT * FROM blog");
 
-                      foreach ($products as $product) {
+                      foreach ($blogs as $blog) {
                       ?>
                         <tr>
                           <th scope="row"><?= $no++ ?></th>
-                          <td><?= $product['product_name'] ?></td>
-                          <td><?= $product['product_quantity'] ?></td>
-                          <td><?= $product['product_type'] ?></td>
-                          <td>Rp. <?= $product['product_price'] ?></td>
+                          <td><?= $blog['blog_title'] ?></td>
+                          <td><?= $blog['blog_post'] ?></td>
                           <td>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalEdit<?= $product['product_id'] ?>">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalEdit<?= $blog['blog_id'] ?>">
                               <i class="bi bi-pencil-square"></i>
                             </button>
-                            <a href="config/del-product.php?id=<?= $product['product_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Menghapus Data ?')">
+                            <a href="config/del-gallery.php?id=<?= $blog['blog_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Menghapus Data ?')">
                               <i class="bi bi-trash"></i>
                             </a>
-                            <!-- Modal Edit -->
-                            <form action="config/edit-product.php" method="POST">
-                              <div class="modal fade" id="exampleModalEdit<?= $product['product_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                            <!-- Modal -->
+                            <form action="config/edit-blog.php" method="post">
+                              <input type="hidden" class="form-control" id="blog_id" name="blog_id" value="<?= $blog['blog_id'] ?>">
+                              <div class="modal fade" id="exampleModalEdit<?= $blog['blog_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product</h1>
+                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Blog</h1>
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                      <input type="hidden" class="form-control" id="product_id" name="product_id" value="<?= $product['product_id'] ?>" readonly>
                                       <div class="mb-3">
-                                        <label for="product_name" class="form-label">Product Name</label>
-                                        <input type="text" class="form-control" id="product_name" name="product_name" value="<?= $product['product_name'] ?>">
+                                        <label for="blog_img" class="form-label">Foto</label>
+                                        <input type="file" class="form-control" id="blog_img" name="blog_img" accept="image/png, image/jpeg, image/jpg" value="<?= $blog['blog_img'] ?>">
                                       </div>
                                       <div class="mb-3">
-                                        <label for="quantity" class="form-label">Quantity</label>
-                                        <input type="number" class="form-control" id="quantity" name="quantity" value="<?= $product['product_quantity'] ?>">
+                                        <label for="blog_title" class="form-label">Blog Title</label>
+                                        <input type="text" class="form-control" id="blog_title" name="blog_title" value="<?= $blog['blog_title'] ?>">
                                       </div>
-                                      <div class="mb-3">
-                                        <label for="price" class="form-label">Price</label>
-                                        <input type="number" class="form-control" id="price" name="price" value="<?= $product['product_price'] ?>">
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="type" class="form-label">Product Type</label>
-                                        <div class="input-group mb-3">
-                                          <select class="form-select" id="type" name="type">
-                                            <option value="<?= $product['product_type'] ?>"><?= $product['product_type'] ?></option>
-                                            <option value="Jacket">Jacket</option>
-                                            <option value="Helmet">Helmet</option>
-                                            <option value="Shoes">Shoes</option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="product_img" class="form-label">Product Foto</label>
-                                        <input type="file" class="form-control" id="product_img" name="product_img" accept="image/png, image/jpeg, image/jpg" value="<?= $product['product_img'] ?>">
+                                      <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="blog_body" style="height: 300px"><?= $blog['blog_body'] ?></textarea>
+                                        <label for="floatingTextarea2">Blog Body</label>
                                       </div>
                                     </div>
                                     <div class=" modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn btn-primary">Edit</button>
+                                      <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                   </div>
                                 </div>

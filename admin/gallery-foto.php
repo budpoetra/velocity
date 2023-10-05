@@ -134,7 +134,6 @@ if (!$_SESSION['Login']) {
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php">
           <i class="bi bi-grid"></i>
@@ -145,7 +144,7 @@ if (!$_SESSION['Login']) {
       <!-- Product -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="product.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-truck"></i>
           <span>Product</span>
         </a>
       </li>
@@ -153,19 +152,18 @@ if (!$_SESSION['Login']) {
       <!-- Gallery Foto -->
       <li class="nav-item">
         <a class="nav-link " href="gallery-foto.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-image"></i>
           <span>Gallery Foto</span>
         </a>
       </li>
 
       <!-- Blog -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="Blog.php">
-          <i class="bi bi-grid"></i>
+        <a class="nav-link collapsed" href="blog.php">
+          <i class="bi bi-file-earmark-post"></i>
           <span>Blog</span>
         </a>
       </li>
-
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -259,42 +257,23 @@ if (!$_SESSION['Login']) {
                               <i class="bi bi-trash"></i>
                             </a>
                             <!-- Modal Edit -->
-                            <!-- <form action="config/edit-product.php" method="POST">
-                              <div class="modal fade" id="exampleModalEdit<?= $product['product_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form action="config/edit-gallery.php" method="POST">
+                              <div class="modal fade" id="exampleModalEdit<?= $gallery['gallery_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product</h1>
+                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Gallery</h1>
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                      <input type="hidden" class="form-control" id="product_id" name="product_id" value="<?= $product['product_id'] ?>" readonly>
+                                      <input type="hidden" class="form-control" id="gallery_id" name="gallery_id" value="<?= $gallery['gallery_id'] ?>" readonly>
                                       <div class="mb-3">
-                                        <label for="product_name" class="form-label">Product Name</label>
-                                        <input type="text" class="form-control" id="product_name" name="product_name" value="<?= $product['product_name'] ?>">
+                                        <label for="gallery_name" class="form-label">Gallery Name</label>
+                                        <input type="text" class="form-control" id="gallery_name" name="gallery_name" value="<?= $gallery['gallery_name'] ?>">
                                       </div>
                                       <div class="mb-3">
-                                        <label for="quantity" class="form-label">Quantity</label>
-                                        <input type="number" class="form-control" id="quantity" name="quantity" value="<?= $product['product_quantity'] ?>">
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="price" class="form-label">Price</label>
-                                        <input type="number" class="form-control" id="price" name="price" value="<?= $product['product_price'] ?>">
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="type" class="form-label">Product Type</label>
-                                        <div class="input-group mb-3">
-                                          <select class="form-select" id="type" name="type">
-                                            <option value="<?= $product['product_type'] ?>"><?= $product['product_type'] ?></option>
-                                            <option value="Jacket">Jacket</option>
-                                            <option value="Helmet">Helmet</option>
-                                            <option value="Shoes">Shoes</option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="product_img" class="form-label">Product Foto</label>
-                                        <input type="file" class="form-control" id="product_img" name="product_img" accept="image/png, image/jpeg, image/jpg" value="<?= $product['product_img'] ?>">
+                                        <label for="gallery_img" class="form-label">Gallery Foto</label>
+                                        <input type="file" class="form-control" id="gallery_img" name="gallery_img" accept="image/png, image/jpeg, image/jpg" value="<?= $gallery['gallery_img'] ?>">
                                       </div>
                                     </div>
                                     <div class=" modal-footer">
@@ -304,7 +283,7 @@ if (!$_SESSION['Login']) {
                                   </div>
                                 </div>
                               </div>
-                            </form> -->
+                            </form>
                           </td>
                         </tr>
                       <?php } ?>
